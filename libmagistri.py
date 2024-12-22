@@ -38,35 +38,38 @@ def get_marks(access_token) :
                         "temp_mark"      : "",
                         "temp_mark_note" : ""
                         }
-        if m[i]["TemporaryMark"] != "" :m[s_abbrev]["temp_mark"] = m[i]["TemporaryMark"]#BLOCK_END
-        if m[i]["TemporaryMarkNote"] != "" :m[s_abbrev]["temp_mark_note"] = m[i]["TemporaryMarkNote"]#BLOCK_END
+        if m[i]["TemporaryMark"] != "": m_[s_abbrev]["temp_mark"] = m[i]["TemporaryMark"]#BLOCK_END
+        if m[i]["TemporaryMarkNote"] != "": m_[s_abbrev]["temp_mark_note"] = m[i]["TemporaryMarkNote"]#BLOCK_END
         del m[i]["Subject"]
         del m[i]["AverageText"]
         del m[i]["SubjectNote"]
         del m[i]["PointsOnly"]
         del m[i]["MarkPredictionEnabled"]
-        for k in m[i] :
-            #write("m[i][k]: ", str(m[i][k]))
+        for k in m[i]:
+            print(f"{m[i][k]= }")
             for l in m[i][k] :
-                #write("l: " + str(l))
-                l["MarkDate"] = re.sub(r"T.*", "", l["MarkDate"])
-                l["MarkDate"] = l["MarkDate"].split("-")
-                date_start = ""
-                for j in reversed(l["MarkDate"]) :
-                    date_start += j
-                    if j != l["MarkDate"][0] :date_start += ". "#BLOCK_END
-                #BLOCK_END
-                l["MarkDate"] = date_start
-        
-                l["EditDate"] = re.sub(r"T.*", "", l["EditDate"])
-                l["EditDate"] = l["EditDate"].split("-")
-                date_end = ""
-                for j in reversed(l["EditDate"]) :
-                    date_end += j
-                    if j != l["EditDate"][0] :date_end += ". "#BLOCK_END
-                #BLOCK_END
-                l["EditDate"] = date_end
-                m_[s_abbrev]["marks"].append(l)
+                try:
+                    print(f"{l= }")
+                    l["MarkDate"] = re.sub(r"T.*", "", l["MarkDate"])
+                    l["MarkDate"] = l["MarkDate"].split("-")
+                    date_start = ""
+                    for j in reversed(l["MarkDate"]) :
+                        date_start += j
+                        if j != l["MarkDate"][0] :date_start += ". "#BLOCK_END
+                    #BLOCK_END
+                    l["MarkDate"] = date_start
+
+                    l["EditDate"] = re.sub(r"T.*", "", l["EditDate"])
+                    l["EditDate"] = l["EditDate"].split("-")
+                    date_end = ""
+                    for j in reversed(l["EditDate"]) :
+                        date_end += j
+                        if j != l["EditDate"][0] :date_end += ". "#BLOCK_END
+                    #BLOCK_END
+                    l["EditDate"] = date_end
+                    m_[s_abbrev]["marks"].append(l)
+                except Exception as e:
+                    print(e)
             #BLOCK_END
         #BLOCK_END
     #BLOCK_END
